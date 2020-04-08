@@ -12,6 +12,7 @@ import { HighlightDirective } from './shared/highlight.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 
+import {MatNativeDateModule} from '@angular/material';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -19,6 +20,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ElmNumDirective } from './shared/elm-num.directive';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +37,8 @@ import { ElmNumDirective } from './shared/elm-num.directive';
   ],
   imports: [
     BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule,
-    MatToolbarModule, MatSidenavModule, MatListModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule
+    MatToolbarModule, MatSidenavModule, MatListModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule,
+    MatButtonModule,MatNativeDateModule,MatDatepickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
