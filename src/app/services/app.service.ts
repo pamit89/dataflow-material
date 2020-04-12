@@ -1,9 +1,12 @@
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
     private elm: string;
     private id: string;
+    filteredOptions: Observable<string[]>;
+
 
     get selectedElm() {
         return this.elm;

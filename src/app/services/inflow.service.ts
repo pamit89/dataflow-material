@@ -9,7 +9,7 @@ export class InflowService {
         return this.http.get('http://3.21.53.117:8080/api/GetFilterValues/getfiltervalueinfow', { params: { filterValues: this.appService.selectedElm, inptTxt: value } });
     }
     inflowFormSubmit(inflowListModel:any){
-        return this.http.post('http://3.21.53.117:8080/api/Inflow/inflowdata', inflowListModel);
+        return this.http.post('http://localhost:5000/api/Inflow/inflowdata', inflowListModel);
     }
     downloadFile(data, filename='data',headersList) {
         let csvData = this.ConvertToCSV(data, headersList);

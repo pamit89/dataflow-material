@@ -22,7 +22,8 @@ import { MatInputModule } from '@angular/material/input';
 import { ElmNumDirective } from './shared/elm-num.directive';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-
+import {MatSelectModule} from '@angular/material/select';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -38,9 +39,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
   imports: [
     BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule,
     MatToolbarModule, MatSidenavModule, MatListModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule,MatNativeDateModule,MatDatepickerModule
+    MatButtonModule,MatNativeDateModule,MatDatepickerModule,MatSelectModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

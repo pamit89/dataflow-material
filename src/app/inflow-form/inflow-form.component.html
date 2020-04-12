@@ -1,16 +1,58 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="inflowForm">
     <div class="inflow">
-        <mat-form-field class="example-full-width">
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker" id="asincatchdate" formControlName="asincatchdate">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>   
-        </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Choose from date</mat-label>
+        <input matInput [matDatepicker]="picker" id="asincatchdatefrom" formControlName="asincatchdatefrom">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>   
+    </mat-form-field>
+    <mat-form-field class="example-half-width">
+        <mat-label>Choose to date</mat-label>
+        <input matInput [matDatepicker]="picker2" id="asincatchdateto" formControlName="asincatchdateto">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>   
+    </mat-form-field>
+    <mat-form-field class="example-full-width">            
+        <!-- <input type="text" matInput [elm]=10 id="enforcementriskscore" placeholder="Enforcement Risk Score"
+            formControlName="enforcementriskscore" [matAutocomplete]="auto"> -->
+            <mat-label>Enforcement Risk Score</mat-label>
+        <mat-select formControlName="enforcementriskscore">
+            <mat-option *ngFor="let option of ers" [value]="option">
+                {{option}}
+            </mat-option>                
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">     
+        <!-- <input type="text" matInput [elm]=11  id="csbriskscore" placeholder="Csb Risk Score" formControlName="csbriskscore"> -->
+        <mat-label>Csb Risk Score</mat-label>
+        <mat-select formControlName="csbriskscore">
+            <mat-option *ngFor="let option of crs" [value]="option">
+                {{option}}
+            </mat-option>                
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">            
+        <input type="text" matInput [elm]=13 id="marketplace" placeholder="MP" formControlName="marketplace" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptionsMP | async" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input type="text" matInput [elm]=14 id="node" placeholder="Node" formControlName="node" [matAutocomplete]="auto">
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptionsNode | async" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>    
+        
         <mat-form-field class="example-full-width">
             <input matInput type="text" [elm]=2 placeholder="Week" id="inflowyw" aria-label="Number"
                 formControlName="inflowyw" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
                     {{option}}
                 </mat-option>
             </mat-autocomplete>
@@ -19,43 +61,37 @@
                 <input type="text" matInput [elm]=3 id="inflowym" placeholder="Month" aria-label="Number" 
                 formControlName="inflowym" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
                         {{option}}
                     </mat-option>
                 </mat-autocomplete>
         </mat-form-field>        
         <mat-form-field class="example-full-width">                        
                 <input type="text" matInput [elm]=6 id="Class" placeholder="Class" 
-                formControlName="Class" [matAutocomplete]="auto" aria-label="Number" >
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                        {{option}}
-                    </mat-option>
-                </mat-autocomplete>            
+                formControlName="Class" aria-label="Number" >                            
         </mat-form-field>        
         <mat-form-field class="example-full-width">            
                 <input type="text" matInput [elm]=5 id="workingstatus" placeholder="Working Status" 
                 formControlName="workingstatus" [matAutocomplete]="auto" aria-label="Number">
                 <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
                         {{option}}
                     </mat-option>
                 </mat-autocomplete>
         </mat-form-field>
         <mat-form-field class="example-full-width">          
-                <input type="text" matInput [elm]=7 id="asinreviewpriority" placeholder="Priority" 
-                formControlName="asinreviewpriority" [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                <mat-label>Priority</mat-label>
+                <mat-select formControlName="asinreviewpriority">
+                    <mat-option *ngFor="let option of asinreviewpriority" [value]="option">
                         {{option}}
                     </mat-option>
-                </mat-autocomplete>
+                </mat-select>
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <input type="text" matInput [elm]=8 id="productcategory" placeholder="Category" 
             formControlName="productcategory" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
                     {{option}}
                 </mat-option>
             </mat-autocomplete>
@@ -64,65 +100,21 @@
             <input type="text" matInput [elm]=9  id="policytype" placeholder="Policy Type" 
             formControlName="policytype" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
                     {{option}}
                 </mat-option>
             </mat-autocomplete>            
         </mat-form-field>
-        <mat-form-field class="example-full-width">            
-            <input type="text" matInput [elm]=10 id="enforcementriskscore" placeholder="Enforcement Risk Score"
-                formControlName="enforcementriskscore" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-        <mat-form-field class="example-full-width">     
-            <input type="text" matInput [elm]=11  id="csbriskscore" placeholder="Csb Risk Score" formControlName="csbriskscore">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
+        
         <mat-form-field class="example-full-width">
             <input type="text" matInput [elm]=12 id="policyentityid" placeholder="Policy Entity Id" 
             formControlName="policyentityid" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
                     {{option}}
                 </mat-option>
             </mat-autocomplete>            
-        </mat-form-field>
-        <mat-form-field class="example-full-width">            
-            <input type="text" matInput [elm]=13 id="marketplace" placeholder="MP" 
-            formControlName="marketplace" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-        <mat-form-field class="example-full-width">
-            <input type="text" matInput [elm]=14 id="node" placeholder="Node" 
-            formControlName="node" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-        <mat-form-field class="example-full-width">            
-            
-            <input type="text" matInput [elm]=15 id="inflow" placeholder="Inflow" 
-            formControlName="inflow" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
+        </mat-form-field>        
         <div class="form-group row">
             <div class="col-md-12">
                 <button mat-raised-button type="submit" color="primary">Submit</button>
