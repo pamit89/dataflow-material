@@ -13,7 +13,7 @@ export class OutflowService {
       return this.http.get('http://3.21.53.117:8080/api/GetFilterValues/getfiltervalueoutfow',{params:{filterValues:this.appservice.selectedElm, inptTxt:value}});
     }
     outflowFormSubmit(outflowListModel:any){
-      return this.http.post('http://localhost:5000/api/Outflow/outflowdata', outflowListModel);
+      return this.http.post('http://3.21.53.117:8080/api/Outflow/outflowdata', outflowListModel);
   }
   downloadFile(data, filename='data',headersList) {
     let csvData = this.ConvertToCSV(data, headersList);
