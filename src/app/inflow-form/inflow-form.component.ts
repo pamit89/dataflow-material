@@ -94,7 +94,7 @@ callInflowFilterService(model:any){
 }
   onSubmit() {
     //alert(JSON.stringify(this.inflowForm.value));
-    var objSubmit=
+    var objSubmit =
     {
       "asin_catch_date_from":{},
       "asin_catch_date_to":{},

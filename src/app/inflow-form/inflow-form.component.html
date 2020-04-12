@@ -57,8 +57,8 @@
                 </mat-option>
             </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field class="example-full-width">            
-                <input type="text" matInput [elm]=3 id="inflowym" placeholder="Month" aria-label="Number" 
+        <mat-form-field class="example-full-width">
+            <input type="text" matInput [elm]=3 id="inflowym" placeholder="Month" aria-label="Number"
                 formControlName="inflowym" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
@@ -88,27 +88,27 @@
                 </mat-select>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <input type="text" matInput [elm]=8 id="productcategory" placeholder="Category" 
-            formControlName="productcategory" [matAutocomplete]="auto">
+            <input type="text" matInput [elm]=8 id="productcategory" placeholder="Category"
+                formControlName="productcategory" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
                     {{option}}
                 </mat-option>
             </mat-autocomplete>
-        </mat-form-field>        
+        </mat-form-field>
         <mat-form-field class="example-full-width">
-            <input type="text" matInput [elm]=9  id="policytype" placeholder="Policy Type" 
-            formControlName="policytype" [matAutocomplete]="auto">
+            <input type="text" matInput [elm]=9 id="policytype" placeholder="Policy Type" formControlName="policytype"
+                [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
                     {{option}}
                 </mat-option>
-            </mat-autocomplete>            
+            </mat-autocomplete>
         </mat-form-field>
         
         <mat-form-field class="example-full-width">
-            <input type="text" matInput [elm]=12 id="policyentityid" placeholder="Policy Entity Id" 
-            formControlName="policyentityid" [matAutocomplete]="auto">
+            <input type="text" matInput [elm]=12 id="policyentityid" placeholder="Policy Entity Id"
+                formControlName="policyentityid" [matAutocomplete]="auto">
             <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let option of appService.filteredOptions | async" [value]="option">
                     {{option}}
