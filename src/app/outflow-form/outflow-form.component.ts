@@ -5,6 +5,7 @@ import { OutflowService } from '../services/outflow.service';
 import { AppService } from '../services/app.service';
 import { startWith, map } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-outflow-form',
@@ -13,13 +14,13 @@ import { DatePipe } from '@angular/common';
 })
 export class OutflowFormComponent implements OnInit {
 
-  constructor(private outflowService: OutflowService, private appService: AppService, private datePipe: DatePipe) { }
+  constructor(private outflowService: OutflowService, private appService: AppService, private datePipe: DatePipe, private loadService:LoaderService) { }
   outflowForm;
   filteredOptionsOutflow: Observable<string[]>;
   filteredOptionsMP:Observable<string[]>;  
   filteredOptionsNode:Observable<string[]>;  
-  mpOptions:string[]=[ 'DE',	'AU',	'NA',	'IT',	'UK',	'AE',	'ES',	'FR',	'IN',	'JP',	'MX',	'SG',	'NL',	'TR',	'CN',	'SA',	'BR'];
-  nodeOptions:string[]=[ 'GDN',	'BLR',	'IAS',	'AMM',	'PEK',	'SJO',	'SZX',	'LUX',	'MUC',	'AMS',	'SEA',	'BNA',	'SHA',	'HND',	'DXB',	'LTN',	'GRU',	'CVG',	'LHR',	'SYD',	'CDG',	'SIN',	'LIN',	'MEX',	'MAD'];
+  mpOptions=[ 'DE',	'AU',	'NA',	'IT',	'UK',	'AE',	'ES',	'FR',	'IN',	'JP',	'MX',	'SG',	'NL',	'TR',	'CN',	'SA',	'BR'];
+  nodeOptions=[ 'GDN',	'BLR',	'IAS',	'AMM',	'PEK',	'SJO',	'SZX',	'LUX',	'MUC',	'AMS',	'SEA',	'BNA',	'SHA',	'HND',	'DXB',	'LTN',	'GRU',	'CVG',	'LHR',	'SYD',	'CDG',	'SIN',	'LIN',	'MEX',	'MAD'];
   ers=[1,2,3,4,5,6,7,8,9,10];
   crs=[1,2,3,4,5,6,7,8,9,10];
   asinpriority=[1,2,3,4];
@@ -45,51 +46,59 @@ export class OutflowFormComponent implements OnInit {
       "org": new FormControl(),
       "sla": new FormControl()
     })
-    this.filteredOptionsMP=this.outflowForm.get("marketplace").valueChanges
-    .pipe(
-      startWith(''),
-      map((value:string) => this._filterMP(value)
-      )
-      );
-    this.filteredOptionsNode=this.outflowForm.get("node").valueChanges
-    .pipe(
-      startWith(''),
-      map((value:string) => this._filterNode(value))
-      );
+    // this.filteredOptionsMP=this.outflowForm.get("marketplace").valueChanges
+    // .pipe(
+    //   startWith(''),
+    //   map((value:string) => this._filterMP(value)
+    //   )
+    //   );
+    // this.filteredOptionsNode=this.outflowForm.get("node").valueChanges
+    // .pipe(
+    //   startWith(''),
+    //   map((value:string) => this._filterNode(value))
+    //   );
     this.outflowForm.valueChanges.subscribe(obj => {
       if(this.appService.selectedId!=undefined && !this.appService.selectedId.includes('node')
       && !this.appService.selectedId.includes('marketplace') && !this.appService.selectedId.includes('enforcementriskscore')
       && !this.appService.selectedId.includes('csbriskscore')){
         let control = obj[this.appService.selectedId];
         if(control.length>=1){
+          this.loadService.show();
           this.outflowService.outflowAutoComplete(control).subscribe((elm:string[]) => {
             this.filteredOptionsOutflow=of(elm);
-            console.log('service response outflowauto -->',elm);
+            this.loadService.hide();
+            //console.log('service response outflowauto -->',elm);
           });
         }
       }
       })
   }
-  private _filterMP(value: string): string[] {
-    const filterValue1 = value.toLowerCase();
-    console.log(this.mpOptions.filter(option => option.toLowerCase().includes(filterValue1)));
-    return this.mpOptions.filter(option => option.toLowerCase().includes(filterValue1));
-  }
-  private _filterNode(value: string): string[] {
-    const filterValue2 = value.toLowerCase();
-    console.log(this.nodeOptions.filter(option => option.toLowerCase().includes(filterValue2)));
-    return this.nodeOptions.filter(option => option.toLowerCase().includes(filterValue2));
-  }
+  // private _filterMP(value: string): string[] {
+  //   const filterValue1 = value.toLowerCase();
+  //   console.log(this.mpOptions.filter(option => option.toLowerCase().includes(filterValue1)));
+  //   return this.mpOptions.filter(option => option.toLowerCase().includes(filterValue1));
+  // }
+  // private _filterNode(value: string): string[] {
+  //   const filterValue2 = value.toLowerCase();
+  //   console.log(this.nodeOptions.filter(option => option.toLowerCase().includes(filterValue2)));
+  //   return this.nodeOptions.filter(option => option.toLowerCase().includes(filterValue2));
+  // }
   callOutflowFilterService(model:any){
+    this.loadService.show();
     this.outflowService.outflowFormSubmit(model).subscribe((response: any)=>{
       //console.log(response);
       if(response!=null && response!=undefined && response.length>0){
         this.outflowService.downloadFile(response,"dataOutflow",Object.keys(response[0]));
+        this.loadService.hide();
       }
       else{
-        alert('Data not available for filtered options');
+        this.loadService.hide();
+        alert('Data not available');
       }
-    },error => alert(error));
+    },error => {
+      this.loadService.hide();
+      alert(error)
+    });
   }
 
   onSubmit() {
@@ -139,9 +148,9 @@ export class OutflowFormComponent implements OnInit {
     if(this.outflowForm.value.csb_risk_score!=undefined && this.outflowForm.value.csb_risk_score!=null)
     objSubmit.csb_risk_score=this.outflowForm.value.csb_risk_score;
     if(this.outflowForm.value.marketplace!=undefined && this.outflowForm.value.marketplace!=null)
-    objSubmit.marketplace.push(this.outflowForm.value.marketplace);
+    objSubmit.marketplace=this.outflowForm.value.marketplace;
     if(this.outflowForm.value.node!=undefined && this.outflowForm.value.node!=null)
-    objSubmit.node.push(this.outflowForm.value.node);
+    objSubmit.node=this.outflowForm.value.node;
     //console.log(objSubmit);
     this.callOutflowFilterService(objSubmit);
 

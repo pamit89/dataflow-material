@@ -24,6 +24,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
 import { DatePipe } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoaderComponent } from './loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -34,12 +36,13 @@ import { DatePipe } from '@angular/common';
     OutflowFormComponent,
     BacklogFormComponent,
     HighlightDirective,
-    ElmNumDirective
+    ElmNumDirective,
+    LoaderComponent
   ],
   imports: [
     BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule, HttpClientModule,
     MatToolbarModule, MatSidenavModule, MatListModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule,
-    MatButtonModule,MatNativeDateModule,MatDatepickerModule,MatSelectModule
+    MatButtonModule,MatNativeDateModule,MatDatepickerModule,MatSelectModule,MatProgressSpinnerModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

@@ -1,15 +1,17 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { AppService } from './app.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: "root" })
 export class InflowService {
+    baseUrl = environment.baseUrl;
     constructor(private http: HttpClient, private appService: AppService) { }
     inflowAutoComplete(value) {
-        return this.http.get('http://3.21.53.117:8080/api/GetFilterValues/getfiltervalueinfow', { params: { filterValues: this.appService.selectedElm, inptTxt: value } });
+        return this.http.get(this.baseUrl+'GetFilterValues/getfiltervalueinfow', { params: { filterValues: this.appService.selectedElm, inptTxt: value } });
     }
     inflowFormSubmit(inflowListModel:any){
-        return this.http.post('http://3.21.53.117:8080/api/Inflow/inflowdata', inflowListModel);
+        return this.http.post(this.baseUrl+'Inflow/inflowdata', inflowListModel);
     }
     downloadFile(data, filename='data',headersList) {
         let csvData = this.ConvertToCSV(data, headersList);

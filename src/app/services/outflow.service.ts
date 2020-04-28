@@ -2,18 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { from } from 'rxjs';
 import { AppService } from './app.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OutflowService {
-
+    baseUrl = environment.baseUrl;
     constructor(private http:HttpClient,private appservice: AppService) { }
     outflowAutoComplete(value){
-      return this.http.get('http://3.21.53.117:8080/api/GetFilterValues/getfiltervalueoutfow',{params:{filterValues:this.appservice.selectedElm, inptTxt:value}});
+      return this.http.get(this.baseUrl+'GetFilterValues/getfiltervalueoutfow',{params:{filterValues:this.appservice.selectedElm, inptTxt:value}});
     }
     outflowFormSubmit(outflowListModel:any){
-      return this.http.post('http://3.21.53.117:8080/api/Outflow/outflowdata', outflowListModel);
+      return this.http.post(this.baseUrl+'Outflow/outflowdata', outflowListModel);
   }
   downloadFile(data, filename='data',headersList) {
     let csvData = this.ConvertToCSV(data, headersList);

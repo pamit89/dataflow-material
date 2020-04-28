@@ -120,13 +120,12 @@
             </mat-autocomplete>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <input type="text" matInput [elm]=13 id="marketplace" placeholder="MP"
-                formControlName="marketplace" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptionsOutflow | async" [value]="option">
+            <mat-label>Marketplace</mat-label>
+            <mat-select  id="marketplace" formControlName="marketplace" multiple>            
+                <mat-option *ngFor="let option of mpOptions" [value]="option">
                     {{option}}
                 </mat-option>
-            </mat-autocomplete>
+            </mat-select>
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <input type="text" matInput [elm]=26 id="neiflag" placeholder="Nei Flag" 
@@ -138,13 +137,12 @@
             </mat-autocomplete>
         </mat-form-field>
         <mat-form-field class="example-full-width">
-            <input type="text" matInput [elm]=14 id="node" placeholder="Node"
-                formControlName="node" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptionsOutflow | async" [value]="option">
+            <mat-label>Node</mat-label>
+            <mat-select  id="node"  formControlName="node" multiple>            
+                <mat-option *ngFor="let option of nodeOptions" [value]="option">
                     {{option}}
-                </mat-option>
-            </mat-autocomplete>
+            </mat-option>
+            </mat-select>            
         </mat-form-field>
         <mat-form-field class="example-full-width">
             <input type="text" matInput [elm]=25 id="org" placeholder="Org" 

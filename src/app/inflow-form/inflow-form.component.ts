@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { InflowService } from '../services/inflow.service';
 import { AppService } from '../services/app.service';
 import { DatePipe } from '@angular/common';
+import { LoaderService } from '../services/loader.service';
 
 @Component({
   selector: 'app-inflow-form',
@@ -12,7 +13,7 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./inflow-form.component.scss']
 })
 export class InflowFormComponent implements OnInit {
-  constructor(private inflowService: InflowService, private appService: AppService, private datePipe: DatePipe) { }
+  constructor(private inflowService: InflowService, private appService: AppService, private datePipe: DatePipe, private loadService:LoaderService) { }
 
   inflowForm;
   mpOptions:string[]=[ 'DE',	'AU',	'NA',	'IT',	'UK',	'AE',	'ES',	'FR',	'IN',	'JP',	'MX',	'SG',	'NL',	'TR',	'CN',	'SA',	'BR'];
@@ -58,11 +59,13 @@ export class InflowFormComponent implements OnInit {
       if (this.appService.selectedId != undefined) {
         let control = obj[this.appService.selectedId];
         if (control.length) {
+          this.loadService.show();
           this.inflowService.inflowAutoComplete(control).subscribe((elm: string[]) => {
             if (this.appService.selectedId === lastid) {
               this.appService.filteredOptions = of(elm);
               console.log('service Response -->', elm);
             }
+            this.loadService.hide();
           });
       }
     }
@@ -82,15 +85,22 @@ export class InflowFormComponent implements OnInit {
   }
 
 callInflowFilterService(model:any){
+  this.loadService.show();
   this.inflowService.inflowFormSubmit(model).subscribe((response: any)=>{
     //console.log(response);
     if(response!=null && response!=undefined && response.length>0){
       this.inflowService.downloadFile(response,"dataInflow",Object.keys(response[0]));
+      this.loadService.hide();
     }
     else{
-      alert('Data not available for filtered options');
+      this.loadService.hide();
+      alert('Data not available');
     }
-  },error => alert(error));
+  },error => {
+    this.loadService.hide();
+    alert(error)
+  }
+    );
 }
   onSubmit() {
     //alert(JSON.stringify(this.inflowForm.value));
